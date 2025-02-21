@@ -1,0 +1,703 @@
+* {
+    /* outline: 1px solid black; */
+    margin: 0 auto;
+    padding: 0;
+}
+
+body {
+    background-color: aliceblue;
+    width: 100vw;
+}
+
+.background_img {
+    background-image: url("../写真/IMG_5983_鴨と川.jpg");
+    background-size: cover;
+}
+
+p, h3 {
+    margin: 0;
+}
+
+header {
+    width: 100vw;
+    height: 6vh;
+    background-color: white;
+    align-items: center;
+    position: fixed;
+    z-index: calc(infinity);
+    top: 0;
+}
+
+header a {
+    width: 16vh;
+}
+
+.justify_content_start {
+    justify-content: start;
+    align-items: center;
+}
+
+header img {
+    height: 4vh;
+    vertical-align: bottom;
+}
+
+header label {
+    display: block;
+}
+
+#header_menu_guide {
+    display: none;
+}
+
+#header_menu {
+    display: none;
+    position: absolute;
+    width: 100vw;
+    height: auto;
+    padding: 1vh;
+    top: 6vh;
+    z-index: 1;
+}
+
+#header_menu li {
+    margin-block: 0.5em;
+}
+
+#header_menu_guide:checked ~ #header {
+    display: block;
+    height: 32vh;
+}
+
+#header_menu_guide:checked ~ #header_menu {
+    display: flex;
+    background-color: white;
+}
+
+#header_menu_guide:checked ~ #header_menu ul {
+    width: 100%;
+}
+
+header a, header ul {
+    margin-inline: 2vw;
+    justify-content: space-evenly;
+}
+
+li {
+    list-style: none;
+    margin-block: 0.5em;
+    margin-inline: 2vw;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+main {
+    width: 94vw;
+    padding-inline : 3vw;
+    margin-top: 6vh;
+    margin-bottom: 3vw;
+}
+
+.main_height {
+    height: 89vh;
+}
+
+/* index.html */
+
+.justify_content_center {
+    justify-content: center;
+}
+
+#top_image {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#main_image {
+    width: 100%;
+    height: 92vh;
+}
+
+.position_relative {
+    position: relative;
+}
+
+.position_absolute {
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+#river_sparkle {
+    height: 400px;
+    width: 400px;
+    top: 48%;
+    left: 50%;
+    z-index: 0;
+}
+
+#main_logo {
+    width: 150px;
+    height: 150px;
+    pointer-events: auto;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    top: 47%;
+    left: 49%;
+}
+
+#main_logo, #navi_menu, #login, #create_account {
+    position: absolute;
+}
+
+#navi_menu {
+    transform: translate(0, -5%);
+}
+
+#navi_menu li {
+    margin-block: 2vh;
+}
+
+#login button, #create_account button {
+    margin-block: 2vh;
+}
+
+.display_none {
+    display: none;
+}
+
+#login div, #create_account div {
+    margin-block: 1em;
+}
+
+label {
+    display: block;
+    margin-inline: 0;
+}
+
+/* account_top.html */
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+#account_top {
+    height: 100vh;
+}
+
+#account_top ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#account_top .main ul {
+    height: calc(88vh - 72px);
+    margin-bottom: 4vh;
+}
+
+#account_top .main li {
+    height: 50%;
+    margin: 0;
+}
+
+#account_top button {
+    height: calc(100% - 4vw);
+    width: 40vw;
+    margin: 2vw;
+    border: 1px solid;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#bulletin_board_button {
+    background-image: url("../GIMP/掲示板.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#information_map_button {
+    background-image: url("../GIMP/情報マップ.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#upload_button {
+    background-image: url("../GIMP/アップロード.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#account_setting_button {
+    background-image: url("../GIMP/アカウント管理.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* bulletin_board.html */
+
+.bulletin_board {
+}
+
+#bulletin_board_container {
+}
+
+#backnumber_search_container {
+    width: 100%;
+    margin-block: 1vw;
+    border-radius: 16px;
+    justify-content: center;
+}
+
+#backnumber_search_box {
+    display: flex;
+}
+
+#backnumber_search {
+    background-color:rgb(241, 233, 176);
+    width: calc(100% - 2vw);
+    padding: 1vw;
+    border-radius: 16px;
+}
+
+#backnumber_search p {
+    display: block;
+}
+
+#backnumber_search ul {
+    padding: 0;
+}
+
+#bulletin_board li {
+    margin-inline: 1vw;
+}
+
+#bulletin_board .list_title {
+    display: block;
+    width: 90px;
+    margin-right: 1vw;
+}
+
+.align_items_center {
+    align-items: center;
+}
+
+#backnumber_search button {
+    display: block;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100px;
+}
+
+.current_search_requirement {
+    margin-top: 2vh;
+    width: calc(100% - 2vw);
+    padding: 1vw;
+    border-radius: 16px;
+    justify-content: center;
+    background-color: rgb(233, 233, 233);
+    margin: 0;
+    margin-left: 2vw;
+}    
+
+.width {
+    width: calc(100% - 90px - 4vw);
+}
+
+.radio_container {
+    gap: 1vw;
+    flex-wrap: wrap;
+}
+
+#pagenation {
+    margin-top: 2vh;
+    width: 430px;
+    padding: 1vw;
+    justify-content: center;
+}
+
+.space_around {
+    justify-content: space-around;
+}
+
+#pagenation a {
+    margin: 0;
+}
+
+h2 {
+    line-height: 3em;
+}
+
+.bulletin_board_view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.bulletin_board_view .each_view {
+    background-color: white;
+    height: auto;
+    width: 320px;
+    border-radius: 10px;
+    margin-block: 1vw;
+    margin-inline: 0.5vw;
+    padding: 20px;
+}
+
+.cursor_pointer {
+    cursor: pointer;
+}
+
+h3 {
+    margin-bottom: 8px;
+}
+
+.flex {
+    display: flex;
+}
+
+.each_view .flex p {
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.season {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+}
+
+.spring {
+    background-color: #f0accd;
+}
+
+.summer {
+    background-color: #98c6ff;
+}
+
+.autumn {
+    background-color: #F09523;
+}
+
+.winter {
+    background-color: #dc4848;
+}
+
+.category {
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+}
+
+.each_view img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    margin-block: 16px;
+    border-radius: 10px;
+}
+
+/* information_map.html */
+
+#map_container {
+    width: calc(100% - 6vh);
+    background-color: white;
+    border-radius: 20px;
+    padding: 3vh;
+    margin: 0;
+    font-size: 15px;
+}
+
+#map_container #map {
+    height: calc(96vh - 560px);
+    width: 100%;
+    border-radius: 20px;
+}
+
+.margin_3vh {
+    margin: 3vh;
+}
+
+#map_content {
+    height: calc(100% - 6vh);
+    width: 100%;
+    margin-inline: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 3vh;
+}
+
+#flex_container {
+    width: 100%;
+    display: flex;
+    gap: 2vw;
+    margin-top: 2vh;
+}
+
+#map_search {
+    background-color:rgb(241, 233, 176);
+    padding: 1vw;
+    border-radius: 16px;
+    margin-inline: 0;
+    width: calc(50% - 2vw);
+}
+
+#map_container .list_title {
+    display: block;
+    width: 90px;
+    margin-right: 0.5vw;
+}
+
+.space_between {
+    justify-content: space-between;
+}
+
+#map_search button {
+    display: block;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100px;
+}
+
+.margin_bottom_8px {
+    margin-bottom: 8px;
+}
+
+#map_current_search_requirement {
+    margin: 0;
+    padding: 1vw;
+    justify-content: center;
+    width: calc(50% - 2vw);
+    border-radius: 16px;
+    background-color: rgb(233, 233, 233);
+}
+
+#map_current_search_requirement .list_title {
+    display: inline;
+    margin-right: 0.5vw;
+}
+
+#map_current_search_requirement div {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+#map_content .each_view {
+    width: 100%;
+    padding: 0;
+}
+
+#map_content .each_view img {
+    object-fit: cover;
+    margin-block: 0px;
+    margin-left: 0;
+    border-radius: 10px;
+    height: auto;
+    width: calc(50% - 2vw);
+}
+
+.preview_left {
+    display: block;
+}
+
+.preview_right {
+    width: calc(50% - 2vw);
+}
+
+/* article.html */
+
+.each_article {
+    background-color: white;
+    height: auto;
+    width: calc(100% - 6vw);
+    border-radius: 10px;
+    padding: 3vw;
+}
+
+.each_article h3 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.font_size_14px {
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.gap_1vw {
+    gap: 1vw;
+}
+
+.each_article_detail {
+    height: 70vh;
+}
+
+.each_detail_visual {
+    height: 50vw;
+    width: 100%;
+    margin-top: 3vw;
+    display: flex;
+    gap: 1vw;
+}
+
+.each_detail_visual_main {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.each_detail_visual img {
+    width: 100%;
+    height: 100%;
+    vertical-align: bottom;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.each_detail_sumbnail_container {
+    width: calc(100% / 3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-inline: 0;
+}
+
+.each_detail_sumbnail {
+    width: 100%;
+    height: calc((100% - 2vw) / 3);
+}
+
+.each_detail_sumbnail img {
+    border-radius: 16px;
+}
+
+.each_detail_visual img {
+    width: 100%;
+    height: 100%;
+    vertical-align: bottom;
+    object-fit: cover;
+}
+
+#each_article_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 3vw;
+    width: 100%;
+}
+
+#each_article_right p {
+    margin-bottom: 3vw;
+}
+
+.each_article_map_container {
+    margin-top: auto;
+    width: 100%;
+}
+
+#map2 {
+    height: 30vh;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.each_article button {
+    margin-inline: 2vh;
+    margin-top: 2vh;
+}
+
+/* upload.html */
+
+#upload_container {
+    width: 100%;
+    border-radius: 20px;
+    display: block;
+}
+
+#upload_form {
+    margin-bottom: 1.5vh;
+}
+
+#upload_form ul {
+    width: 60%;
+}
+
+#upload_form li {
+    margin-block: 2vh;
+}
+
+.width_120px {
+    width: 120px;
+}
+
+.margin_0 {
+    margin: 0;
+}
+
+.align_items_start {
+    align-items: start;
+    line-height: 3;
+}
+
+.justify_content_flex_end {
+    justify-content: flex-end;
+}
+
+#save_button, #upload_button {
+    margin-block: 1.5vh;
+    margin-inline: 2vw;
+}
+
+#upload_map_container {
+    height: 100vh;
+    width: 100%;
+}
+
+#map3 {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+/* account_setting.html */
+
+#account_setting {
+    font-size: 15px;
+    margin-left: 10%;
+}
+
+#account_setting li {
+    margin-block: 2vh;
+}
+
+.width_220px {
+    width: 130px;
+}
+
+.margin_left_2vw {
+    margin: 0;
+    margin-left: 2vw;
+    width: 240px;
+    display: flex;
+    gap: 5vw;
+}
+
+#save_setting {
+    margin-block: 1.5vh;
+}
