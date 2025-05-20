@@ -4,13 +4,17 @@
     padding: 0;
 }
 
+:root {
+    --scrollbar: 0;
+}
+
 body {
-    background-color: rgb(235, 248, 255);
-    width: 100vw;
+    background-color: rgb(204, 227, 238);
+    width: calc(100vw - var(--scrollbar));
 }
 
 .background_img {
-    background-image: url("../写真/IMG_5983_鴨と川.jpg");
+    background-image: url("../image/index_background_image.jpg");
     background-size: cover;
     background-position-y: -5%;
 }
@@ -21,13 +25,14 @@ p, h3 {
 
 header {
     width: 100vw;
-    height: 8vh;
+    height: 80px;
     background-color: white;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
     z-index: calc(infinity);
+    display: none;
 }
 
 header img {
@@ -59,23 +64,21 @@ a {
 }
 
 main {
-    width: 94vw;
-    padding-inline : 3vw;
-    margin-top: 8vh;
+    width: 94%;
+    padding-inline : 3%;
 }
 
 .main_height {
     height: 89vh;
 }
 
-/* index.html */
+/* index.php */
 
 .justify_content_center {
     justify-content: center;
 }
 
 #top_image {
-    height: 92vh;
     width: 100%;
     top: 64px;
     display: flex;
@@ -152,7 +155,7 @@ label {
     width: 100px;
 }
 
-/* account_top.html */
+/* account_top.php */
 
 #account_top ul {
     display: flex;
@@ -167,52 +170,51 @@ label {
     height: 30vh;
     width: 40vw;
     margin: 2vw;
-    border: 1px solid;
+    border: 2px solid rgb(148, 156, 159);
     border-radius: 16px;
     cursor: pointer;
     font-size: 16px;
 }
 
-#bulletin_board_button {
-    background-image: url("../GIMP/掲示板.png");
+#bulletin_board_link {
+    background-image: url("../image/bulletin_board.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center 10px;
 }
 
-#information_map_button {
-    background-image: url("../GIMP/情報マップ.png");
+#information_map_link {
+    background-image: url("../image/information_map.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 70% -50px;
 }
 
-#upload_button {
-    background-image: url("../GIMP/アップロード.png");
+#upload_link {
+    background-image: url("../image/upload.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 50% -50px;
 }
 
-#account_setting_button {
-    background-image: url("../GIMP/アカウント管理.png");
+#account_setting_link {
+    background-image: url("../image/account_setting.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 50% -50px;
 }
 
-/* bulletin_board.html */
+/* bulletin_board.php */
 
 .headline {
     display: inline-block;
     width: 94vw;
-    background-color: rgb(235, 248, 255);
+    background-color: rgb(204, 227, 238);
 }
 
 #bulletin_board {
     display: flex;
     justify-content: space-between;
-    margin-top: 8vh;
     top: 72px;
 }
 
@@ -274,7 +276,7 @@ label {
     padding: 1vw;
     border-radius: 16px;
     justify-content: center;
-    background-color: rgb(218, 227, 231);
+    background-color: rgb(189, 205, 208);
 }
 
 #pagenation {
@@ -292,26 +294,35 @@ label {
     margin: 0;
 }
 
+#previous_page, #next_page {
+    display: inline-block;
+    width: 32px;
+}
+
 h2 {
-    line-height: 3em;
+    line-height: 8vh;
 }
 
 .bulletin_board_view {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    margin-left: 460px;
-    justify-content: flex-end;
+    margin-left: calc(460px + 2vw);
+}
+
+.each_view_frame {
+    width: auto;
+    margin: 0;
 }
 
 .bulletin_board_view .each_view {
     background-color: white;
     height: auto;
     width: 360px;
+    padding-block: 30px;
+    padding-inline: 24px;
     border-radius: 20px;
     margin-bottom: 1vw;
     margin-inline: 0.5vw;
-    padding: 30px;
 }
 
 .cursor_pointer {
@@ -320,6 +331,10 @@ h2 {
 
 h3 {
     margin-bottom: 8px;
+}
+
+#each_article_info {
+    display: flex;
 }
 
 .flex {
@@ -369,7 +384,12 @@ h3 {
     border-radius: 10px;
 }
 
-/* information_map.html */
+.article_view_text {
+    width: auto;
+    overflow-wrap: break-word;
+}
+
+/* information_map.php */
 
 #map_container {
     height: 80vh;
@@ -469,20 +489,49 @@ h3 {
     align-items: center;
 }
 
+#no_view_flower_1 {
+    width: 9.5vw;
+    height: 8vw;
+}
+
+#no_view_flower_2 {
+    width: 11vw;
+    height: 8vw;
+}
+
+#no_view_flower_3 {
+    width: 10vw;
+    height: 9vw;
+}
+
+#no_view_flower_4 {
+    width: 7vw;
+    height: 9vw;
+}
+
 .preview_bottom {
     width: 100%;
+    display: flex;
 }
 
 .image_container {
     margin-block: 0px;
     border-radius: 20px;
     height: 25vh;
-    width: 400px;
+    width: calc(50% - 6vh);
     overflow: hidden;
 }
 
 .preview h3{
     margin-top: 8px;
+}
+
+#preview_top {
+    flex-direction: column;
+}
+
+#preview_info {
+    margin-inline: 0;
 }
 
 .preview_left {
@@ -495,45 +544,43 @@ h3 {
 .preview_text {
     width: 50%;
     margin-inline: 3vh;
+    overflow-wrap: break-word;
 }
 
-/* article.html */
+/* article.php */
 
 .each_article {
     display: flex;
     background-color: white;
-    height: calc(92vh - 72px - 2vw);
-    margin-bottom: 2vw;
+    height: 80vh;
     border-radius: 20px;
 }
 
 .each_article h3 {
     margin: 0;
     font-size: 28px;
+    width: 100%;
 }
 
 .each_article_container {
     display: flex;
-    width: 100%;
+    justify-content: space-between;
+    width: calc(100% - 6vw);
+    margin-inline: 1vw;
 }
 
 .each_article_left {
     width: calc(50% - 6vw);
-    margin-right: 6vw;
+    margin: 0;
 }
 
 .margin_0 {
     margin: 0;
 }
 
-.each_article_right p {
-    padding: 4px;
-    border-radius: 4px;
-}
-
 .each_article section {
-    height: 74vh;
-    padding: 2vw;
+    height: calc(80vh - 6vh);
+    padding: 3vh;
 }
 
 .each_article_right {
@@ -580,15 +627,23 @@ h3 {
 }
 
 #each_article_right {
-    width: 50%;
+    width: 48%;
+    overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 42px;
+    position: relative;
+    margin: 0;
+}
+
+#each_article_right p {
+    margin: auto;
+    width: 100%;
+    /* height: calc(40vh - 23px); */
+    font-size: 1.95vh;
 }
 
 .each_article_map_container {
-    margin-top: auto;
     width: 100%;
 }
 
@@ -598,8 +653,33 @@ h3 {
     border-radius: 20px;
 }
 
+#no_map {
+    height: 30vh;
+    left: -10%;
+}
+
+#no_map_flower_1 {
+    width: 9.5vw;
+    height: 8vw;
+}
+
+#no_map_flower_2 {
+    width: 11vw;
+    height: 8vw;
+}
+
+#no_map_flower_3 {
+    width: 10vw;
+    height: 9vw;
+}
+
+#no_map_flower_4 {
+    width: 7vw;
+    height: 9vw;
+}
+
 .each_article button {
-    margin: 2vh;
+    margin-top: 2vh;
     width: 100px;
 }
 
@@ -607,20 +687,15 @@ h3 {
     margin-inline: 3vh;
 }
 
-/* article_management.html */
+/* article_management.php */
 
 .background_color {
-    background-color: rgb(218, 227, 231);
+    background-color: rgb(201, 206, 209);
 }
 
 .background_color_blue {
-    background-color: rgba(173, 208, 228, 0.797)
+    background-color: rgb(176, 198, 208);
 }
-
-/* .each_view a {
-    width: auto;
-    height: auto;
-} */
 
 .justify_content_flex_start {
     justify-content: flex-start;
@@ -628,7 +703,6 @@ h3 {
 
 h3 {
     display: block;
-    width: 300px;
 }
 
 .bulletin_board_view .each_view .edit_icon {
@@ -661,15 +735,49 @@ h3 {
     width: 100px;
 }
 
-/* upload.html */
+/* upload.php */
 
-#upload_container {
-    height: 80vh;
-    /* width: calc(100% - 13vw); */
+.form_container {
+    height: 78vh;
+    width: 100%;
     border-radius: 20px;
     display: flex;
     justify-content: center;
     gap: 4vw;
+    padding-bottom: 3vh;
+}
+
+.form_container li {
+    margin-block: 0;
+}
+
+#title {
+    overflow: hidden;
+    resize: none;
+    line-break: anywhere;
+    width: 20em;
+}
+
+#text {
+    overflow: hidden;
+    resize: none;
+    line-break: anywhere;
+    width: 40em;
+}
+
+.char_counter_title {
+    margin-left: 10px;
+}
+
+.char_counter_box {
+    align-items: baseline;
+    height: 100%;
+    margin: 0;
+}
+
+.char_counter_text {
+    display: block;
+    text-align: right;
 }
 
 .flex_column {
@@ -680,20 +788,26 @@ select {
     width: 40px;
 }
 
-@media screen and (max-width:1400px) {
-    #upload_container {
+/* @media screen and (max-width:1400px) {
+    #form_container {
         width: 100%;
         margin-inline: 0;
     }
-}
+} */
 
-#upload_form {
-    margin-block: 2vh;
+#upload_form, #edit_form {
     margin-inline: 0;
 }
 
-#upload_form ul {
-    height: calc(72.5vh - 24px);
+.form_ul {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.width_110px {
+    width: 110px;
 }
 
 .width_120px {
@@ -713,17 +827,27 @@ select {
     justify-content: flex-end;
 }
 
+#delete_point_label {
+    padding: 0;
+}
+
+.map_point {
+    margin-left: 0;
+}
+
+.padding_0 {
+    padding: 0;
+}
+
 #save_button, #upload_button {
-    margin-block: 1.5vh;
+    margin-top: 1.5vh;
     margin-inline: 0;
     width: 100px;
-
 }
 
 #upload_map_container {
-    height: calc(100% - 6vh);
-    width: calc(((100% - 4vw) / 2) - 6vh);
-    margin: 3vh;
+    width: 50%;
+    margin-inline: 0;
 }
 
 #map3 {
@@ -745,7 +869,12 @@ select {
 .edit_image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     background-color: #FFFFFF;
+}
+
+.opacity {
+    opacity: 0.7;
 }
 
 input[type="date"] {
@@ -774,23 +903,51 @@ input[type="file"] {
     border-radius: 20px;
 }
 
-/* account_setting.html */
+/* account_setting.php */
 
 #account_setting {
-    height: 92vh;
+    height: calc(100vh - 80px);
 }
 
-.account_setting_container {
-    width: calc(((100% - 4vw) / 2) - 6vh);
-    height: 50vh;
-    padding: 20px;
+.account_setting_box {
+    height: calc(100% - 72px);
+    justify-content: space-evenly;
+}
+
+.account_setting_container_left {
+    width: 44vw;
+    height: 70vh;
     border-radius: 20px;
+    position: relative;
+}
+
+.account_setting_container_right {
+    width: 34vw;
+    height: 55vh;
+    border-radius: 20px;
+    position: relative;
+}
+
+.river_sparcle_blue {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
 #account_setting_form {
-    width: 84%;
-    margin-block: 3vh;
-    margin-inline: 8% 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+#account_edit {
+    margin-bottom: 1rem;
 }
 
 #account_setting ul {
@@ -805,11 +962,15 @@ input[type="file"] {
     width: 220px;
 }
 
+.text_align_center {
+    text-align: center;
+}
+
 .margin_left_2vw {
     margin: 0;
     margin-left: 2vw;
     display: flex;
-    gap: 4vw;
+    /* gap: 4vw; */
 }
 
 #save_setting_button {
@@ -819,19 +980,37 @@ input[type="file"] {
 }
 
 #account_delete_container {
-    height: calc(100% - 24px);
+    width: 100%;
+    height: 100%;
 }
 
-@media screen and (max-width: 1500px) {
-    /* #account_setting {
-        width: 46%;
-    } */
-
-    .margin_left_2vw {
-        gap: 2vw;
-    }    
+.river_sparcle_blue_mini {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
+#account_delete_form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+#account_delete {
+    margin-bottom: 1rem;
+}
+
+#account_delete_button {
+    margin-block: 1.5vh;
+}
 
 /* レスポンシブ */
 

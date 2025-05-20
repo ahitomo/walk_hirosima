@@ -3,67 +3,134 @@
 require_once 'common/db_function.php';
 // html関連の関数を読み込む
 require_once 'common/html_function.php';
+session_cache_limiter('private_no_expire');
+session_start();
+if(isset($_SESSION['user_id']) == false) {
+    $user_id = "";
+    $user_name = "";
+} else {
+    $user_id = $_SESSION['user_id'];
+    $user_name = $_SESSION['user_name'];
+}
+
+// 検索条件を削除する
+$url = $_SERVER['HTTP_REFERER'];
+// echo "<br><br><br>";
+// echo $url;
+if (!strpos($url, "/bulletin_board.php") AND !strpos($url, "/article.php")) {
+    unset($_SESSION['date_start'], $_SESSION['date_end'], $_SESSION['categories'], $_SESSION['categry_id_string'], $_SESSION['seasons'], $_SESSION['season_id_string']);
+}
+
+if (isset($_POST['search'])) {
+    unset($_SESSION['date_start'], $_SESSION['date_end'], $_SESSION['categories'], $_SESSION['categry_id_string'], $_SESSION['seasons'], $_SESSION['season_id_string']);
+}
 
 // 検索条件を取得する
 // 期間
 $date_start = date("0000-00-00");
 $date_end = date("Y-m-d");
-if (isset($_POST["date_start"]) AND $_POST["date_start"] != "") {
-    $date_start = $_POST["date_start"];
+
+if (isset($_POST["date_start"])) {
+    if ($_POST["date_start"] !== "") {
+        $date_start = $_POST["date_start"];
+        $_SESSION['date_start'] = $date_start;    
+    }
+    else {
+        $date_start = date("0000-00-00");
+    }
 }
-if (isset($_POST["date_end"]) AND $_POST["date_end"] != "") {
-    $date_end = $_POST["date_end"];
+else if (isset($_SESSION["date_start"])) {
+    $date_start = $_SESSION["date_start"];
+}
+if (isset($_POST["date_end"])) {
+    if ($_POST["date_end"] !== "") {
+        $date_end = $_POST["date_end"];
+        $_SESSION['date_end'] = $date_end;
+    }
+    else {
+        $date_end = date("Y-m-d");
+    }
+}
+else if (isset($_SESSION["date_end"])) {
+    $date_end = $_SESSION["date_end"];
 }
 
 // カテゴリ
-$categories = "";
 $category_name_array = [];
 if (isset($_POST["category"])) {
+    // echo "<br>";
+    // print_r($_POST['category']);
     $category_id_array = $_POST["category"];
     $category_id_string = implode(',', $category_id_array);
     $category_name_array = $dbm->get_category_requirement($category_id_string);
     $categories = implode(',', $category_name_array);
+    $_SESSION["categories"] = $categories;
+    $_SESSION['categry_id_string'] = $category_id_string;
+}
+else if (isset($_SESSION["categories"])) {
+    $categories = $_SESSION["categories"];
+    $category_id_string = $_SESSION['categry_id_string'];
+}
+else {
+    $categories = "";
+    $category_id_string = "";
 }
 
 // 季節
-$seasons = "";
 $season_name_array = [];
 if (isset($_POST["season"])) {
+    // echo "<br>";
+    // print_r($_POST['season']);
     $season_id_array = $_POST["season"];
     $season_id_string = implode(',', $season_id_array);
     $season_name_array = $dbm->get_season_requirement($season_id_string);
     $seasons = implode(',', $season_name_array);
+    $_SESSION["seasons"] = $seasons;
+    $_SESSION['season_id_string'] = $season_id_string;
+}
+else if (isset($_SESSION["seasons"])) {
+    $seasons = $_SESSION["seasons"];
+    $season_id_string = $_SESSION['season_id_string'];
+}
+else {
+    $seasons = "";
+    $season_id_string = "";
 }
 
 // 記事情報を取得する関数を呼び出して変数に代入する
-$article_list = $dbm->get_article_list();
+$article_list = $dbm->get_article_list_bb($user_id, $category_id_string, $season_id_string);
+// echo "<br><br><br>";
+// print_r($article_list);
 
 // ページの情報を取得する
 $max = 6;
-$article_num = count($article_list);
+$max_page = 1;
+$now = 1;
+if (!is_null($article_list)) {
+    $article_num = count($article_list);
+    $max_page = ceil($article_num / $max);
 
-$max_page = ceil($article_num / $max);
+    if (!isset($_GET['page_id'])) {
+        $now = 1;
+    } else {
+        $now = $_GET['page_id'];
+    }
+    $start_no = ($now - 1) * $max;
+    $disp_data = array_slice($article_list, $start_no, $max, true);
 
-if (!isset($_GET['page_id'])) {
-    $now = 1;
-} else {
-    $now = $_GET['page_id'];
+    // echo "<br><br><br>";
+    // print_r($disp_data);
+
+    $disp_data_length = count($disp_data);
+    $disp_season_name_array = [];
+    for ($i = 0; $i < $disp_data_length; $i++) {
+        // echo $disp_data[$i]["season_name"];
+        $disp_season_name_array[] = $disp_data[$i + $start_no]["season_name"];
+    }
+    $json_disp_season_name_array = json_encode($disp_season_name_array);
+    // echo "<br><br><br>";
+    // print_r($json_disp_season_name_array);
 }
-$start_no = ($now - 1) * $max;
-$disp_data = array_slice($article_list, $start_no, $max, true);
-
-// echo "<br><br><br>";
-// print_r($disp_data);
-
-$disp_data_length = count($disp_data);
-$disp_season_name_array = [];
-for ($i = 0; $i < $disp_data_length; $i++) {
-    // echo $disp_data[$i]["season_name"];
-    $disp_season_name_array[] = $disp_data[$i + $start_no]["season_name"];
-}
-$json_disp_season_name_array = json_encode($disp_season_name_array);
-// echo "<br><br><br>";
-// print_r($json_disp_season_name_array);
 ?>
 
 <!DOCTYPE html>
@@ -71,18 +138,18 @@ $json_disp_season_name_array = json_encode($disp_season_name_array);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="screen and (min-width:1401px)" href="css/style_pc.css">
-    <link rel="stylesheet" type="text/css" media="screen and (max-width:1400px)" href="css/style_tablet.css">
-    <link rel="stylesheet" type="text/css" media="screen and (max-width:428px)" href="css/style_mobile.css">
+    <link rel="stylesheet" type="text/css" media="screen and (min-width:1430px)" href="css/style_pc.css">
+    <link rel="stylesheet" type="text/css" media="screen and (max-width:1430px)" href="css/style_tablet.css">
+    <link rel="stylesheet" type="text/css" media="screen and (max-width:760px)" href="css/style_mobile.css">
     <script src="js/script.js"></script>
-    <link rel="icon" type="image/png" sizes="32x32" href="GIMP/歩く鳥.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="image/walking_bird.png">
     <title>歩こう広島｜掲示板</title>
 </head>
-<body class="position_relative">
+<body>
     <header class="flex">
         <a href="account_top.php">
-            <img class="header_bird" src="GIMP/歩く鳥.png" alt="歩く鳥">
-            <img class="header_logo" src="GIMP/ロゴ.png" alt="ロゴ">
+            <img class="header_bird" src="image/walking_bird.png" alt="歩く鳥">
+            <img class="header_logo" src="image/header_logo.png" alt="ロゴ">
         </a>
         <input type="checkbox" id="header_menu_guide" class="display_none">
         <label for="header_menu_guide">menu</label>
@@ -92,25 +159,25 @@ $json_disp_season_name_array = json_encode($disp_season_name_array);
                 <li><a href="information_map.php">情報マップ</a></li>
                 <li><a href="article_management.php">記事管理</a></li>
                 <li><a href="account_setting.php">アカウント管理</a></li>
-                <li><a href="index.php">ログアウト</a></li>
+                <li><a id="logout" href="logout.php" onclick="return CheckLogout()">ログアウト</a></li>
             </ul>
         </div>
     </header>
     <main class="position_relative">
         <h2 class="headline position_fixed">掲示板</h2>
         <div id="bulletin_board" class="position_relative">
-            <div class="position_fixed">
-                <div id="backnumber_search_container">
-                    <div id="backnumber_search_box">
-                        <form id="backnumber_search" method="POST" action="bulletin_board.php">
-                            <p>バックナンバー検索</p>
+            <div id="backnumber_search_container">
+                <div id="backnumber_search_box">
+                    <form id="backnumber_search" method="POST" action="bulletin_board.php">
+                        <p id="backnumber_search_toggle">バックナンバー検索</p>
+                        <div id="backnumber_search_display">
                             <ul>
                                 <li class="flex align_items_center">
-                                    <label class="list_title" for="date">期間</label>
-                                    <div class="flex align_items_center margin_0">
-                                        <input type="date" name="date_start">
+                                    <p class="list_title" for="date">期間</p>
+                                    <div class="flex wrap margin_0 width">
+                                        <input class="margin_0" type="date" name="date_start">
                                         <p>～</p>
-                                        <input type="date" name="date_end">
+                                        <input class="margin_0" type="date" name="date_end">
                                     </div>
                                 </li>
                                 <li class="flex align_items_center">
@@ -134,177 +201,70 @@ $json_disp_season_name_array = json_encode($disp_season_name_array);
                                 <li class="flex align_items_center">
                                     <p class="list_title">未読／既読</p>
                                     <div class="radio_container flex align_items_center margin_0">
-                                        <label><input type="checkbox" id="not_read" name="read_satus[]" value="not_read">未読</label>
-                                        <label><input type="checkbox" id="read" name="read_satus[]" value="read">既読</label>
+                                        <label><input type="checkbox" id="not_read" name="read_satus[]" value="not_read" disabled>未読</label>
+                                        <label><input type="checkbox" id="read" name="read_satus[]" value="read" disabled>既読</label>
                                     </div>
                                 </li>
                             </ul>
-                            <button type="submit">検索</button>
-                        </form>
-                        <div class="current_search_requirement">
-                            <p>現在の検索条件</p>
-                            <ul>
-                                <?php
-                                    show_current_search_requirement_bb($date_start, $date_end, $categories, $seasons);
-                                ?>
-
-                                <!-- <li class="flex align_items_center">
-                                    <p class="list_title">期間</p>
-                                    <p>XXXX/XX/XX</p>
-                                    <p>～</p>
-                                    <p>XXXX/XX/XX</p>
-                                </li>
-                                <li class="flex align_items_center">
-                                    <p class="list_title">カテゴリ</p>
-                                    <p>イベント</p>
-                                </li>
-                                <li class="flex align_items_center">
-                                    <p class="list_title">季節</p>
-                                    <p>春</p>
-                                </li>
-                                <li class="flex align_items_center">
-                                    <p class="list_title">未読／既読</p>
-                                    <p>未読</p>
-                                </li> -->
-                            </ul>
+                            <button type="submit" name="search">検索</button>
                         </div>
-                    </div>
-                    <div id="pagenation">
-                        <p>ページ指定</p>
-                        <ul class="flex space_around">
+                    </form>
+                    <div class="current_search_requirement">
+                        <p id="current_search_requirement_toggle">現在の検索条件</p>
+                        <ul id="current_search_requirement_display">
                             <?php
-                            // ページ数を表示
-                                show_pagenation($max_page, $now);
+                                show_current_search_requirement_bb($date_start, $date_end, $categories, $seasons);
                             ?>
-                            <!-- <li><a href="" rel="prev">前へ</li>
-                            <li>1</li>
-                            <li><a href="/page/2/">2</a></li>
-                            <li><a href="/page/3/">3</a></li>
-                            <li><a href="" rel="next">次へ</a></li> -->
                         </ul>
                     </div>
                 </div>
+                <div id="pagenation">
+                    <p>ページ指定</p>
+                    <ul class="flex space_around wrap">
+                        <?php
+                        // ページ数を表示
+                            show_pagenation_bb($max_page, $now);
+                        ?>
+                    </ul>
+                </div>
             </div>
 
-            <section class="bulletin_board_view">
+            <div class="bulletin_board_view">
                 <?php
                 // 記事情報が存在した場合、情報表示の関数を呼び出す
-                if (!is_null($disp_data)) {
-                    show_article_list($disp_data, $start_no, $max);
+                if (isset($disp_data)) {
+                    show_article_list_bb($disp_data, $start_no, $max);
                 } else {
                     echo "記事がありません";
                 }
                 ?>
-
-                <!-- <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230930_大須賀町_駐車場に吹き溜まる落ち葉.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article>
-                <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230723_大須賀町_道端の畳.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article>
-                <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230721_大須賀町_油の流れる川.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article>
-                <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230721_大須賀町_地の裂け目.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article>
-                <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230717_松原町_黒い宝石みたいな鳥の糞.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article>
-                <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230611_松原町_打ち上げられた魚_2.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article>
-                <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230611_松原町_ひっかかったゴミ.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article>
-                <article class="each_view cursor_pointer">
-                    <a href="article.php">
-                        <h3>○○神社　秋まつり</h3>
-                        <div class="flex">
-                            <p class="autumn font_size_14px">秋</p>
-                            <p class="event font_size_14px">イベント</p>
-                            <p class="font_size_14px">投稿日：2024年10月13日</p>
-                        </div>
-                        <img src="写真/20230226_松原町_橋の手すりにはマカロンがついている.JPG" alt="神社の写真">
-                        <p>今年もおまつりの季節がやってきました。おみこしに屋台、ダンスやバンド演奏などお楽しみが盛りだくさん！みんなでわいわい楽しみましょう！</p>
-                    </a>
-                </article> -->
-            </section>  
+            </div>
         </div>
     </main>
+    <footer class="flex position_relative">
+        <a id="back_to_top" class="display_none" href="#">ページ上部へ戻る</a>
+    </footer>
 
     <script>
+        let UserName = "<?php if ($user_name) {echo $user_name;} else {echo '';}?>";
+            // console.log(UserName);
+            if (UserName == '') {
+                let headerLink = document.querySelectorAll("li");
+                console.log(headerLink);
+                headerLink[2].classList.add("display_none");
+                headerLink[3].classList.add("display_none");
+                headerLink[7].classList.add("display_none");
+                headerLink[8].classList.add("display_none");
+            }
+
         let seasonNameArray = document.getElementsByClassName("season_name");
-        console.log(seasonNameArray);
-        let dispSeasonNameArray = <?php echo $json_disp_season_name_array; ?>;
-        console.log(dispSeasonNameArray);
-        for (let i = 0; i < <?php echo $disp_data_length; ?>; i++) {
+        // console.log(seasonNameArray);
+        let dispSeasonNameArray = <?php if ($json_disp_season_name_array) {echo $json_disp_season_name_array;} else {echo "''";} ?>;
+        // console.log(dispSeasonNameArray);
+        for (let i = 0; i < <?php if ($disp_data_length) {echo $disp_data_length;} else {echo "0";} ?>; i++) {
                 // console.log(dispSeasonNameArray[i]);
                 let dispSeasonName = String(dispSeasonNameArray[i]);
-                console.log(dispSeasonName);
+                // console.log(dispSeasonName);
                 switch (dispSeasonName) {
                     case "春":
                         seasonNameArray[i].classList.add("spring");
@@ -321,6 +281,41 @@ $json_disp_season_name_array = json_encode($disp_season_name_array);
                 }
         }
 
+        // 画面幅の調整
+        const setScrollbarWidth = () => {
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        // カスタムプロパティの値を更新する
+        document.documentElement.style.setProperty('--scrollbar', `${scrollbarWidth}px`);
+        };
+        // 表示されたとき
+        window.addEventListener('load', setScrollbarWidth);
+        // リサイズしたとき
+        window.addEventListener('resize', setScrollbarWidth)
+
+        // 検索欄と絞り込み条件の表示／非表示
+        let BacknumberSearchToggle = document.getElementById("backnumber_search_toggle");
+        let CurrentSearchRequirementToggle = document.getElementById("current_search_requirement_toggle");
+        let BacknumberSearchDisplay = document.getElementById("backnumber_search_display");
+        let CurrentSearchRequirementDisplay = document.getElementById("current_search_requirement_display");
+
+        if (window.matchMedia("(max-width:760px)").matches) {
+            BacknumberSearchDisplay.classList.add("display_none");
+            CurrentSearchRequirementDisplay.classList.add("display_none");
+
+            BacknumberSearchToggle.addEventListener('click', (e) => {
+                BacknumberSearchDisplay.classList.toggle("display_none");
+            })
+            CurrentSearchRequirementToggle.addEventListener('click', (e) => {
+                CurrentSearchRequirementDisplay.classList.toggle("display_none");
+            })
+        }
+
+        // 「ページ上部へ戻る」ボタンの表示
+        let backToPageTop = document.getElementById("back_to_top");
+        console.log(backToPageTop);
+        if (window.matchMedia("(max-width:1430px)").matches) {
+            backToPageTop.classList.remove("display_none");
+        }
     </script>
 </body>
 </html>
