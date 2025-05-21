@@ -545,6 +545,7 @@ h3 {
     width: 50%;
     margin-inline: 3vh;
     overflow-wrap: break-word;
+    font-size: 1.95vh;
 }
 
 /* article.php */
