@@ -140,7 +140,7 @@ if (!is_null($article_list)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" media="screen and (min-width:1430px)" href="css/style_pc.css">
     <link rel="stylesheet" type="text/css" media="screen and (max-width:1430px)" href="css/style_tablet.css">
-    <link rel="stylesheet" type="text/css" media="screen and (max-width:685px)" href="css/style_mobile.css">
+    <link rel="stylesheet" type="text/css" media="screen and (max-width:771px)" href="css/style_mobile.css">
     <script src="js/script.js"></script>
     <link rel="icon" type="image/png" sizes="32x32" href="image/walking_bird.png">
     <title>歩こう広島｜掲示板</title>
