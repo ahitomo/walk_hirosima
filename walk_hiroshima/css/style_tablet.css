@@ -356,7 +356,7 @@ h2 {
 .bulletin_board_view .each_view {
     background-color: white;
     height: auto;
-    width: 320px;
+    width: 25vw;
     border-radius: 10px;
     margin-block: 1vw;
     margin-inline: 1vw;
@@ -430,12 +430,23 @@ h3 {
 }
 
 .each_view_image {
-    width: 320px;
-    height: 240px;
+    width: 25vw;
+    height: 18vw;
 }
 
 #back_to_top {
     line-height: 3rem;
+}
+
+@media screen and (max-width: 1070px){
+    .bulletin_board_view .each_view {
+        width: 267.5px;
+    }
+
+    .each_view_image {
+        width: 267.5px;
+        height: 192.5px;
+    }
 }
 
 /* information_map.php */
