@@ -438,14 +438,14 @@ h3 {
     line-height: 3rem;
 }
 
-@media screen and (max-width: 1070px){
+@media screen and (max-width: 1180px){
     .bulletin_board_view .each_view {
-        width: 267.5px;
+        width: 295.5px;
     }
 
     .each_view_image {
-        width: 267.5px;
-        height: 192.5px;
+        width: 295.5px;
+        height: 212.5px;
     }
 }
 
