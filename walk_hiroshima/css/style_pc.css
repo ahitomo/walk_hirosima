@@ -42,8 +42,6 @@ header img {
 
 header label {
     display: none;
-    z-index: calc(infinity);
-    cursor: pointer;
 }
 
 #header_menu {
@@ -152,10 +150,6 @@ label {
     cursor: pointer;
 }
 
-button {
-    cursor: pointer;
-}
-
 #login_button, #create_account_button {
     margin-block: 2vh;
     width: 100px;
@@ -221,7 +215,7 @@ button {
 #bulletin_board {
     display: flex;
     justify-content: space-between;
-    top: 6vh;
+    top: 72px;
 }
 
 #backnumber_search_container {
@@ -306,8 +300,7 @@ button {
 }
 
 h2 {
-    line-height: 6vh;
-    font-size: 3.12vh;
+    line-height: 7vh;
 }
 
 .bulletin_board_view {
@@ -351,7 +344,7 @@ h3 {
 .font_size_14px {
     padding: 4px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 1.95vh;
 }
 
 .season {
@@ -430,7 +423,6 @@ h3 {
 #flex_container {
     display: flex;
     gap: 2vw;
-    font-size: 1.95vh;
 }
 
 #map_search {
@@ -438,10 +430,6 @@ h3 {
     padding: 1vw;
     border-radius: 16px;
     margin-inline: 0;
-}
-
-#map_search input[type="date"] {
-    font-size: 1.95vh;
 }
 
 .wrap {
@@ -536,24 +524,14 @@ h3 {
 
 .preview h3{
     margin-top: 8px;
-    margin-bottom: 1vh;
 }
 
 #preview_top {
     flex-direction: column;
 }
 
-#preview_top h3 {
-    font-size: 2.275vh;
-}
-
 #preview_info {
     margin-inline: 0;
-    margin-bottom: 1vh;
-}
-
-#preview_info p {
-    font-size: 1.95vh;
 }
 
 .preview_left {
@@ -933,7 +911,7 @@ input[type="file"] {
 }
 
 .account_setting_box {
-    height: calc(100% - 6vh);
+    height: calc(100% - 72px);
     justify-content: space-evenly;
 }
 
