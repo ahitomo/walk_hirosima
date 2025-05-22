@@ -122,12 +122,12 @@
             <h3>{$title}</h3>
         <div class="flex flex_direction_column">
             <div class="flex margin_0">
-                <p class="season font_size_14px">{$season_name}</p>
-                <p class="category font_size_14px">{$category_name}</p>
-                <p class="font_size_14px">投稿日時：{$registration_date}</p>
+                <p class="season font_size_vh">{$season_name}</p>
+                <p class="category font_size_vh">{$category_name}</p>
+                <p class="font_size_vh">投稿日時：{$registration_date}</p>
             </div>
             <div class="flex margin_0">
-                <p class="font_size_14px">投稿者：{$user_name}</p>
+                <p class="font_size_vh">投稿者：{$user_name}</p>
             </div>
         </div>
         ARTICLE_TOP;
