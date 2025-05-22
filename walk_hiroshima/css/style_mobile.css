@@ -416,7 +416,7 @@ h2 {
 
 .each_view img {
     width: 85vw;
-    height: 65vw;
+    height: 60vw;
     object-fit: cover;
     margin-block: 16px;
     border-radius: 10px;
