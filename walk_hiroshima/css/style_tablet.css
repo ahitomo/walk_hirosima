@@ -349,8 +349,12 @@ h2 {
 .bulletin_board_view {
     display: flex;
     align-items: start;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
+}
+
+.each_view_frame {
+    margin-inline: 0.75vw;
 }
 
 .bulletin_board_view .each_view {
