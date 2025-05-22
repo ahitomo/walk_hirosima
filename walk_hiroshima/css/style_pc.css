@@ -344,6 +344,12 @@ h3 {
 .font_size_14px {
     padding: 4px;
     border-radius: 4px;
+    font-size: 14px;
+}
+
+.font_size_vh {
+    padding: 4px;
+    border-radius: 4px;
     font-size: 1.95vh;
 }
 
