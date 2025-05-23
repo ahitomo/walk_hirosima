@@ -523,8 +523,10 @@ h3 {
 .image_container {
     margin-block: 0px;
     border-radius: 20px;
-    height: 25vh;
-    width: calc(50% - 6vh);
+    height: 10vh;
+    width: 15vh;
+    /* height: 25vh;
+    width: calc(50% - 6vh); */
     overflow: hidden;
 }
 
@@ -866,8 +868,10 @@ select {
 /* edit.php */
 
 .edit .image_container {
-    width: 120px;
-    height: 80px;
+    /* width: 120px;
+    height: 80px; */
+    width: 15vh;
+    height: 10vh;
     border-radius: 10px;
     object-fit: cover;
     overflow: hidden;
