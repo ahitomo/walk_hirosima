@@ -227,7 +227,7 @@ if (!is_null($article_list_im)) {
     </main>
 
     <script>
-        let UserName = "<?php if ($user_name) {echo $user_name;} else {echo "''";}?>";
+        let UserName = "<?php if ($user_name) {echo $user_name;} else {echo '';}?>";
             // console.log(UserName);
             if (UserName == "") {
                 let headerLink = document.querySelectorAll("li");
